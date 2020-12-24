@@ -11,7 +11,11 @@ int Convolution::DoConvolution(const Mat& sourceImage, Mat& destinationImage) {
 	//SetKernelIndex();
 
 
-	int height = sourceImage.rows, width = sourceImage.cols, nchannels = sourceImage.channels();
+	int height = sourceImage.rows,
+		width = sourceImage.cols,
+		nchannels = sourceImage.channels(),
+		srcWidthStep = sourceImage.step[0];
+	
 
 	// Tạo destinationImage Mat.
 	if (nchannels == 1) {
@@ -108,7 +112,9 @@ int Convolution::DoConvolution(const Mat& sourceImage, Mat& destinationImage) {
 						//index_c -= 1;
 						index_c = width - 1;
 
-					g_val += _kernel[ii] * sourceImage.at<uchar>(index_r, index_c* nchannels + chanIndex);
+					//g_val += _kernel[ii] * sourceImage.at<uchar>(index_r, index_c* nchannels + chanIndex);
+					g_val += _kernel[ii] * sourceImage.data[index_r*srcWidthStep + index_c * nchannels + chanIndex];
+
 				}
 
 				// Gán giá trị cho matrix đích.

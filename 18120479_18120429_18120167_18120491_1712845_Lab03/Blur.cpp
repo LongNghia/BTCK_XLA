@@ -23,9 +23,22 @@ Blur::~Blur() {}
 int Blur::BlurImage(const Mat& sourceImage, Mat& destinationImage, int kWidth, int kHeight, int method) {
 	if (sourceImage.data == NULL)
 		return 1;
-
 	Convolution k;
-	int height = sourceImage.rows, width = sourceImage.cols, nchannels = sourceImage.channels();
+
+	//các tham số cơ bản
+	int height = sourceImage.rows, 
+		width = sourceImage.cols, 
+		nchannels = sourceImage.channels(),
+		srcWidthStep = sourceImage.step[0];
+
+	if (nchannels == 1) {
+		destinationImage = cv::Mat(height, width, CV_8UC1);
+	}
+	else {
+		destinationImage = cv::Mat(height, width, CV_8UC3);
+	}
+
+	//average
 	if (method == 0) {
 		vector<float> kernel;
 		for (int i = 0; i < kWidth * kHeight; i++)
@@ -34,7 +47,7 @@ int Blur::BlurImage(const Mat& sourceImage, Mat& destinationImage, int kWidth, i
 		k.DoConvolution(sourceImage, destinationImage);
 	}
 	else
-		if (method == 2) {
+		if (method == 2) { //gaussian
 			vector<float> kernel;
 			float sqr_sigma = 1;
 
@@ -51,14 +64,12 @@ int Blur::BlurImage(const Mat& sourceImage, Mat& destinationImage, int kWidth, i
 				// lưu chỉ số truy cập nhanh 
 				vector<KernelIndex> _kernelIndex = k.SetKernelIndex(kHeight, kWidth);
 				
-																				 
-				//for (int i = 0; i < _kernelIndex.size(); i++) {
-				//	cout << _kernel[i].x << ", " << _kernelIndex[i].y << endl;;
-				//}
+																	 
+				//const int dx = kWidth / 2;
+				//const int dy = kHeight / 2;
 
-				const int dx = kWidth / 2;
-				const int dy = kHeight / 2;
 				Mat img = sourceImage;
+
 				for (int i = 0; i < height; i++)
 				{
 
@@ -96,7 +107,9 @@ int Blur::BlurImage(const Mat& sourceImage, Mat& destinationImage, int kWidth, i
 									//index_c -= 1;
 									index_c = width - 1;
 
-								temp.push_back(sourceImage.at<uchar>(index_r, index_c* nchannels + chanIndex));
+								//temp.push_back(sourceImage.at<uchar>(index_r, index_c* nchannels + chanIndex));
+								temp.push_back(img.data[index_r*srcWidthStep + index_c * nchannels + chanIndex]);
+
 							}
 
 							sort(temp.begin(), temp.end());

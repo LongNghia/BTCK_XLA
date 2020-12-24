@@ -21,22 +21,21 @@ void main() {
 	k.SetKernel(kernel,3, 3);
 
 
-	Mat image = imread("building.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+	Mat image = imread("5.png", IMREAD_COLOR);
+
 
 	Mat img;
 	namedWindow("Show Image");
 	imshow("Show Image", image);
 	
-	//Blur b;
-	//b.BlurImage(image, img, 5, 5, 1);
-
+	Blur b;
+	b.BlurImage(image, img, 3, 3, 1);
 
 
 	
 
-
-	EdgeDetector ed;
-	ed.DetectEdge(image, img, 5, 5, 1);
+	//EdgeDetector ed;
+	//ed.DetectEdge(image, img, 3, 3, 3);
 
 
 
