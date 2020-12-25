@@ -1,13 +1,9 @@
 Usage:  
-  <18120479_18120429_18120167_18120491_1712845_Lab01.exe> <Command> <InputPath> <CommandArguments>  
+  <18120479_18120429_18120167_18120491_1712845_Lab02.exe> <Command> <InputPath> <CmdArguments>
 Commands:
-  --help                       tro giup
-  --rgb2gray                   chuyen anh mau sang anh xam
-  --rgb2hsv                    chuyen anh tu he mau RGB sang he mau HSV
-  --hsv2rgb                    chuyen anh tu he mau HSV sang he mau RGB   
-  --bright                     tang giam do sang cua anh
-  --contrast                   tang giam do tuong phan cua anh
-  --hist                       tinh histogram cua anh mau, anh xam
-  --equalhist                  can bang histogram anh mau, anh xam
-  --drawhist                   ve histogram cua anh mau, anh xam
-  --compare                    so sanh anh dua vao histogram
+  --mean                       loc trung binh
+  --median                     loc trung vi
+  --gauss                      lam tron anh bang Gauss
+  --sobel                      phat hien bien canh bang Sobel
+  --prewitt                    phat hien bien canh bang Prewitt
+  --laplace                    phat hien bien canh bang Laplace
